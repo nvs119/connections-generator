@@ -1,5 +1,6 @@
 import './App.css';
 import Grid from './Grid.js';
+import GenerateButton from "./Generate.js";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
           here's a randomly generated connections game
         </p>
         <Grid />
+        <GenerateButton />
       </header>
     </div>
   );

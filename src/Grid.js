@@ -28,7 +28,7 @@ const Grid = () => {
         className="react-grid-layout"
         layout={layout} 
         cols={4}
-        rowHeight={175}
+        rowHeight={185}
         width={900}
         maxRows={4}
         maxCols={4}>

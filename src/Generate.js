@@ -1,8 +1,10 @@
-export function GenerateButton() {
+import "./Generate.css";
+
+export default function GenerateButton() {
     return (
         <div>
-            <button>
-                
+            <button className="generateButton">
+                <p><b>generate</b></p> 
             </button>
         </div>
     )

@@ -9,6 +9,7 @@ export default function Card({children}) {
     return (
         <div isDraggable={false}>
             <button className="wordBox" onClick={() => changeText("newText")}>
+                <h3>test</h3>
                 {children}
             </button>  
         </div>

@@ -1,0 +1,13 @@
+.generateButton {
+    width: 400px;
+    height: 100px;
+    border-width: 4px;
+    background-color:rgb(229, 149, 229);
+    border-color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    text-align: center;
+    align-items: left;
+    position: relative;
+    border-radius: 15px;
+}
