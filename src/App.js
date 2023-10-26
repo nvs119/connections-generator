@@ -1,6 +1,6 @@
 import './App.css';
 import Grid from './Grid.js';
-import GenerateButton from "./Generate.js";
+import CheckButton from "./Check.js";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         display="flex"
         justifyContent="center" 
         alignItems="center" />
-        <GenerateButton />
+        <CheckButton />
       </header>
     </div>
   );
