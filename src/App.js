@@ -5,11 +5,14 @@ import GenerateButton from "./Generate.js";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" justifyContent="right">
         <p>
           here's a randomly generated connections game
         </p>
-        <Grid />
+        <Grid 
+        display="flex"
+        justifyContent="center" 
+        alignItems="center" />
         <GenerateButton />
       </header>
     </div>
