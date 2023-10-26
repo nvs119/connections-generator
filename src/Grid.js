@@ -2,6 +2,9 @@ import { useState } from 'react';
 import GridLayout from "react-grid-layout";
 import './Grid.css';
 import Card from "./Card.js";
+import {Dimensions} from "react-native";
+
+var {height, width} = Dimensions.get('window');
 
 const Grid = () => {
   const [layout, setLayout] = useState([
@@ -28,8 +31,8 @@ const Grid = () => {
         className="react-grid-layout"
         layout={layout} 
         cols={4}
-        rowHeight={185}
-        width={900}
+        rowHeight={height/8}
+        width={width / 2}
         maxRows={4}
         maxCols={4}>
             <div className="react-grid-item" key="a0"><Card /></div>

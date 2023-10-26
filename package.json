@@ -12,6 +12,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-grid-layout": "^1.4.2",
+    "react-native": "^0.72.6",
+    "react-native-web": "^0.19.9",
     "react-scripts": "5.0.1",
     "react-sticky-box": "^2.0.5",
     "styled-components": "^6.1.0",
