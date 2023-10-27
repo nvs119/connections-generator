@@ -14,29 +14,54 @@ const categories ={"fruit": ["mango", "pineapple", "grape", "orange"],
                     "things you climb": ["ladder", "rope", "stairs", "mountain"],
                     "languages": ["python", "french", "sign", "mandarin"],
                     "gen z slang": ["gas", "cap", "drip", "rizz"],
-                    "related to shakespearian titles": ["tempest", "merchant", "shrew", "dream"]}
+                    "related to shakespearian titles": ["tempest", "merchant", "shrew", "dream"],
+                    "office snacks": ["cheez-its", "goldfish", "doritos", "popcorn"],
+                    "methods of sending money": ["wire", "check", "cash", "credit"],
+                    "teas": ["jasmine", "oolong", "taro", "matcha"]}
 
 const keys = Object.keys(categories);
 
 
 export default function Grid({children}) {
+  const [gridState, setGridState] = useState({
+    selectedWords: [],
+    objects: [
+      {id:0}, 
+      {id:1},
+      {id:2}, 
+      {id:3},
+      {id:4}, 
+      {id:5},
+      {id:6}, 
+      {id:7},
+      {id:8}, 
+      {id:9},
+      {id:10}, 
+      {id:11},
+      {id:12}, 
+      {id:13},
+      {id:14}, 
+      {id:15}
+    ]
+  })
+
   const [layout, setLayout] = useState([
-    { i: "a0", x: 0, y: 0, w: 1, h: 1 },
-    { i: "b0", x: 1, y: 0, w: 1, h: 1 },
-    { i: "c0", x: 2, y: 0, w: 1, h: 1 },
-    { i: "d0", x: 3, y: 0, w: 1, h: 1 },
-    { i: "a1", x: 0, y: 1, w: 1, h: 1 },
-    { i: "b1", x: 1, y: 1, w: 1, h: 1 },
-    { i: "c1", x: 2, y: 1, w: 1, h: 1 },
-    { i: "d1", x: 3, y: 1, w: 1, h: 1 },
-    { i: "a2", x: 0, y: 2, w: 1, h: 1 },
-    { i: "b2", x: 1, y: 2, w: 1, h: 1 },
-    { i: "c2", x: 2, y: 2, w: 1, h: 1 },
-    { i: "d2", x: 3, y: 2, w: 1, h: 1 },
-    { i: "a3", x: 0, y: 3, w: 1, h: 1 },
-    { i: "b3", x: 1, y: 3, w: 1, h: 1 },
-    { i: "c3", x: 2, y: 3, w: 1, h: 1 },
-    { i: "d3", x: 3, y: 3, w: 1, h: 1 }
+    { i: "0", x: 0, y: 0, w: 1, h: 1 },
+    { i: "1", x: 1, y: 0, w: 1, h: 1 },
+    { i: "2", x: 2, y: 0, w: 1, h: 1 },
+    { i: "3", x: 3, y: 0, w: 1, h: 1 },
+    { i: "4", x: 0, y: 1, w: 1, h: 1 },
+    { i: "5", x: 1, y: 1, w: 1, h: 1 },
+    { i: "6", x: 2, y: 1, w: 1, h: 1 },
+    { i: "7", x: 3, y: 1, w: 1, h: 1 },
+    { i: "8", x: 0, y: 2, w: 1, h: 1 },
+    { i: "9", x: 1, y: 2, w: 1, h: 1 },
+    { i: "10", x: 2, y: 2, w: 1, h: 1 },
+    { i: "11", x: 3, y: 2, w: 1, h: 1 },
+    { i: "12", x: 0, y: 3, w: 1, h: 1 },
+    { i: "13", x: 1, y: 3, w: 1, h: 1 },
+    { i: "14", x: 2, y: 3, w: 1, h: 1 },
+    { i: "15", x: 3, y: 3, w: 1, h: 1 }
   ]);
 
   const pick = (obj, keys) => Object.keys(obj).filter(k => keys.includes(k)).reduce((res, k) => Object.assign(res, {[k]: obj[k]}), {});
@@ -52,7 +77,6 @@ export default function Grid({children}) {
               selected.push(category);
             }
     }
-    console.log(selected);
     var currentCategories = pick(categories, selected);
     console.log(currentCategories);
     
@@ -60,11 +84,14 @@ export default function Grid({children}) {
   }
 
   function Card({text}) {
-    const [buttonText, setButtonText] = useState(text);
+
+    const handleClick = (e) => {
+      console.log("test handle click", e.target.firstChild.data);
+    }
 
     return (
-            <button className="wordBox">
-                {buttonText}
+            <button className="wordBox" onClick={handleClick}>
+                {text}
             </button>  
     )
   }
@@ -110,29 +137,16 @@ export default function Grid({children}) {
 
   return (
       <GridLayout 
-      className="react-grid-layout"
+      className="react-grid-layout" 
       layout={layout} 
       cols={4}
       rowHeight={height/8}
       width={width / 2}
       maxRows={4}
       maxCols={4}>
-          <div className="react-grid-item" key="a0"><Card text={words[0]} /></div>
-          <div className="react-grid-item" key="b0"><Card text={words[1]} /></div>
-          <div className="react-grid-item" key="c0"><Card text={words[2]} /></div>
-          <div className="react-grid-item" key="d0"><Card text={words[3]} /></div>
-          <div className="react-grid-item" key="a1"><Card text={words[4]} /></div>
-          <div className="react-grid-item" key="b1"><Card text={words[5]} /></div>
-          <div className="react-grid-item" key="c1"><Card text={words[6]} /></div>
-          <div className="react-grid-item" key="d1"><Card text={words[7]} /></div>
-          <div className="react-grid-item" key="a2"><Card text={words[8]} /></div>
-          <div className="react-grid-item" key="b2"><Card text={words[9]} /></div>
-          <div className="react-grid-item" key="c2"><Card text={words[10]} /></div>
-          <div className="react-grid-item" key="d2"><Card text={words[11]} /></div>
-          <div className="react-grid-item" key="a3"><Card text={words[12]} /></div>
-          <div className="react-grid-item" key="b3"><Card text={words[13]} /></div>
-          <div className="react-grid-item" key="c3"><Card text={words[14]} /></div>
-          <div className="react-grid-item" key="d3"><Card text={words[15]} /></div>
+        { gridState.objects.map((elements, index) => (
+           <div className="react-grid-item" key={index}><Card text={words[index]} /></div>
+        )) }
       </GridLayout>
   );
 };

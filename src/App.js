@@ -5,13 +5,12 @@ import CheckButton from "./Check.js";
 function App() {
   return (
     <div className="App">
-      <header className="App-header" justifyContent="right">
+      <header className="App-header">
         <p>
           here's a randomly generated connections game
         </p>
         <Grid 
         display="flex"
-        justifyContent="center" 
         alignItems="center" />
         <CheckButton />
       </header>

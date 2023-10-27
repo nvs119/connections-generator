@@ -19,6 +19,11 @@
     z-index: 3;
 }
 
+.react-grid-item:hover * {
+    background-color: #f4cff5;
+    transition-duration: 120ms;
+}
+
 /* .react-grid-item.react-grid-placeholder {
     background: #f5b9e1;
     opacity: 0.1;
@@ -44,3 +49,8 @@
     text-align: center;
     border-radius: 15px;
   }
+
+.wordBox:active {
+    border-color: rgb(96, 16, 123);
+    background-color: #f4cff5;
+}
