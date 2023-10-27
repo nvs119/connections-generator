@@ -1,6 +1,5 @@
 import './App.css';
 import Grid from './Grid.js';
-import CheckButton from "./Check.js";
 
 function App() {
   return (
@@ -12,7 +11,6 @@ function App() {
         <Grid 
         display="flex"
         alignItems="center" />
-        <CheckButton />
       </header>
     </div>
   );

@@ -21,6 +21,51 @@ const categories ={"fruit": ["mango", "pineapple", "grape", "orange"],
 
 const keys = Object.keys(categories);
 
+const pick = (obj, keys) => Object.keys(obj).filter(k => keys.includes(k)).reduce((res, k) => Object.assign(res, {[k]: obj[k]}), {});
+
+function generateNewCategories() {
+  let selected = [];
+  while(selected.length < 4){
+          var r = Math.floor(Math.random() * keys.length);
+          if(selected.indexOf(keys[r]) === -1) {
+            console.log(r)
+            let category = keys[r];
+            console.log(category)
+            selected.push(category);
+          }
+  }
+  var currentCategories = pick(categories, selected);
+  console.log(currentCategories);
+  
+  return currentCategories;
+}
+
+function shuffle(a) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+  }
+  return a;
+}
+
+function randomizeWords() {
+  let cats = generateNewCategories();
+  console.log(cats.length);
+  let wordArr = []
+  for (let cat in cats) {
+    console.log(cats[cat]);
+    for (let word in cats[cat]) {
+      wordArr.push(cats[cat][word]);
+    }
+  }
+  shuffle(wordArr);
+  return wordArr;
+}
+
+const words = randomizeWords();
 
 export default function Grid({children}) {
   const [gridState, setGridState] = useState({
@@ -45,6 +90,38 @@ export default function Grid({children}) {
     ]
   })
 
+  function toggleActiveWords(index) {
+    let newSelectedWords = Array.from(gridState.selectedWords);
+
+    if (newSelectedWords.length === 4) {
+      return;
+    }
+
+    if (!newSelectedWords.includes(gridState.objects[index])) {
+      newSelectedWords.push(gridState.objects[index]);
+    }
+    else {
+      console.log("you already clicked this");
+    }
+    setGridState({
+      ...gridState,
+      selectedWords: newSelectedWords
+    });
+
+    console.log("test");
+    console.log(gridState.selectedWords);
+  }
+
+  function toggleActiveWordsStyle(index) {
+    let selected = Array.from(gridState.selectedWords);
+    if (selected.includes(gridState.objects[index])) {
+      return "wordBox-active";
+    }
+    else {
+      return "wordBox-inactive";
+    }
+  }
+
   const [layout, setLayout] = useState([
     { i: "0", x: 0, y: 0, w: 1, h: 1 },
     { i: "1", x: 1, y: 0, w: 1, h: 1 },
@@ -64,65 +141,17 @@ export default function Grid({children}) {
     { i: "15", x: 3, y: 3, w: 1, h: 1 }
   ]);
 
-  const pick = (obj, keys) => Object.keys(obj).filter(k => keys.includes(k)).reduce((res, k) => Object.assign(res, {[k]: obj[k]}), {});
-
-  function generateNewCategories() {
-    let selected = [];
-    while(selected.length < 4){
-            var r = Math.floor(Math.random() * keys.length);
-            if(selected.indexOf(keys[r]) === -1) {
-              console.log(r)
-              let category = keys[r];
-              console.log(category)
-              selected.push(category);
-            }
-    }
-    var currentCategories = pick(categories, selected);
-    console.log(currentCategories);
-    
-    return currentCategories;
-  }
-
-  function Card({text}) {
+  function Card({text, classNameProp}) {
 
     const handleClick = (e) => {
       console.log("test handle click", e.target.firstChild.data);
     }
 
     return (
-            <button className="wordBox" onClick={handleClick}>
+            <button className={classNameProp} onClick={handleClick}>
                 {text}
             </button>  
     )
-  }
-
-  function shuffle(a) {
-    var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
-    }
-    return a;
-}
-
-  function randomizeWords() {
-    let cats = generateNewCategories();
-    console.log(cats.length);
-    let wordArr = []
-    for (let cat in cats) {
-      console.log(cats[cat]);
-      for (let word in cats[cat]) {
-        wordArr.push(cats[cat][word]);
-      }
-    }
-    shuffle(wordArr);
-    return wordArr;
-  }
-
-  function isCorrect() {
-
   }
 
   function checkWork() {
@@ -130,12 +159,14 @@ export default function Grid({children}) {
     // check if there are no more tiles -- put congrats screen
     // if wrong, then get rid of the highlighting or whatever on the 
     // selected tiles
+    if (gridState.selectedWords.length !== 4) {
+      alert("you need to select exactly 4 words to check!")
+    }
   }
-
-  let words = randomizeWords();
   const [gameInProgress, setGameInProgress] = useState(true);
 
   return (
+    <>
       <GridLayout 
       className="react-grid-layout" 
       layout={layout} 
@@ -145,8 +176,14 @@ export default function Grid({children}) {
       maxRows={4}
       maxCols={4}>
         { gridState.objects.map((elements, index) => (
-           <div className="react-grid-item" key={index}><Card text={words[index]} /></div>
+           <div onClick={() => toggleActiveWords(index)} className="react-grid-item" key={index}>
+            <Card classNameProp={toggleActiveWordsStyle(index)} text={words[index]} />
+          </div>
         )) }
       </GridLayout>
+      <button onClick={checkWork} className="checkButton">
+        <p><b>check!</b></p> 
+      </button>
+    </>
   );
 };

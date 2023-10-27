@@ -50,7 +50,42 @@
     border-radius: 15px;
   }
 
-.wordBox:active {
+.wordBox-active {
     border-color: rgb(96, 16, 123);
     background-color: #f4cff5;
+    width: 170px;
+    height: 110px;
+    border-width: 5px;
+    padding: 14px 28px;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.wordBox-inactive {
+    width: 170px;
+    height: 110px;
+    border-width: 5px;
+    border-color:black;
+    background-color: #e893ec;
+    padding: 14px 28px;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.checkButton {
+    margin-top: 2%;
+    width: 400px;
+    height: 100px;
+    border-width: 4px;
+    background-color:rgb(229, 149, 229);
+    border-color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    border-radius: 15px;
 }
