@@ -3,39 +3,30 @@
     margin-right: 50%;
     transition: height 200ms ease;
 }
-.react-grid-item {
+.react-grid-item-visible {
     transition: all 200ms ease;
     transition-property: left, top;
 }
-.react-grid-item.cssTransforms {
+
+.react-grid-item-visible.cssTransforms {
     transition-property: transform;
 }
-.react-grid-item.resizing {
+.react-grid-item-visible.resizing {
     z-index: 1;
 }
 
-.react-grid-item.react-draggable-dragging {
+.react-grid-item-visible.react-draggable-dragging {
     transition: none;
     z-index: 3;
 }
 
-.react-grid-item:hover * {
+.react-grid-item-visible:hover * {
     background-color: #f4cff5;
     transition-duration: 120ms;
 }
-
-/* .react-grid-item.react-grid-placeholder {
-    background: #f5b9e1;
-    opacity: 0.1;
-    transition-duration: 100ms;
-    z-index: 2;
-    border-radius: 4px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-} */
+.react-grid-item-invisible {
+    visibility: hidden
+}
 
 .wordBox {
     width: 170px;
@@ -74,6 +65,10 @@
     cursor: pointer;
     text-align: center;
     border-radius: 15px;
+}
+
+.wordBox-hidden {
+    visibility: hidden;
 }
 
 .checkButton {

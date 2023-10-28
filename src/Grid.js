@@ -17,7 +17,8 @@ const categories ={"fruit": ["mango", "pineapple", "grape", "orange"],
                     "related to shakespearian titles": ["tempest", "merchant", "shrew", "dream"],
                     "office snacks": ["cheez-its", "goldfish", "doritos", "popcorn"],
                     "methods of sending money": ["wire", "check", "cash", "credit"],
-                    "teas": ["jasmine", "oolong", "taro", "matcha"]}
+                    "teas": ["jasmine", "oolong", "taro", "matcha"]
+                    }
 
 const keys = Object.keys(categories);
 
@@ -51,23 +52,41 @@ function shuffle(a) {
   return a;
 }
 
-function randomizeWords() {
-  let cats = generateNewCategories();
-  console.log(cats.length);
+function getAllWords(currentCategories) {
   let wordArr = []
-  for (let cat in cats) {
-    console.log(cats[cat]);
-    for (let word in cats[cat]) {
-      wordArr.push(cats[cat][word]);
+  for (let cat in currentCategories) {
+    console.log(currentCategories[cat]);
+    for (let word in currentCategories[cat]) {
+      wordArr.push(currentCategories[cat][word]);
     }
   }
+  return wordArr;
+}
+
+function randomizeWords(currentCategories) {
+  let wordArr = getAllWords(currentCategories);
   shuffle(wordArr);
   return wordArr;
 }
 
-const words = randomizeWords();
+const currentCategories = generateNewCategories();
+const justCategories = Object.keys(currentCategories);
+const unshuffledWords = getAllWords(currentCategories);
+const firstGroup = unshuffledWords.slice(0, 4);
+const secondGroup = unshuffledWords.slice(4, 8);
+const thirdGroup = unshuffledWords.slice(8, 12);
+const fourthGroup = unshuffledWords.slice(12, );
 
-export default function Grid({children}) {
+
+console.log(justCategories);
+for (let word in unshuffledWords) {
+  console.log(unshuffledWords[word]);
+}
+
+
+const words = randomizeWords(currentCategories);
+
+export default function Grid() {
   const [gridState, setGridState] = useState({
     selectedWords: [],
     objects: [
@@ -101,14 +120,13 @@ export default function Grid({children}) {
       newSelectedWords.push(gridState.objects[index]);
     }
     else {
-      console.log("you already clicked this");
+      alert("you already clicked this");
     }
     setGridState({
       ...gridState,
       selectedWords: newSelectedWords
     });
 
-    console.log("test");
     console.log(gridState.selectedWords);
   }
 
@@ -154,16 +172,65 @@ export default function Grid({children}) {
     )
   }
 
-  function checkWork() {
+  const [itemVisibility, setItemVisibility] = useState("react-grid-item-visible")
+  function checkWork(indexes) {
     // if correct, then disappear the four tiles
     // check if there are no more tiles -- put congrats screen
     // if wrong, then get rid of the highlighting or whatever on the 
     // selected tiles
+
     if (gridState.selectedWords.length !== 4) {
       alert("you need to select exactly 4 words to check!")
+      return;
+    }
+
+    let wordsToCheck = [];
+    
+    let arr1 = currentCategories[0];
+    console.log("ARRay 1: " + arr1);
+
+    for (let ind in indexes) {
+      let wordToCheck = document.getElementById(Object.values(indexes[ind]).toString()).textContent;
+      console.log(wordToCheck);
+      wordsToCheck.push(wordToCheck);
+    }
+
+    let correct = false;
+    let whichGroup = -1;
+    if (wordsToCheck.sort().join(',') === firstGroup.sort().join(',')){
+      correct = true;
+      whichGroup = 0;
+    }
+    else if (wordsToCheck.sort().join(',') === secondGroup.sort().join(',')){
+      correct = true;
+      whichGroup = 1;
+    }
+    else if (wordsToCheck.sort().join(',') === thirdGroup.sort().join(',')){
+      correct = true;
+      whichGroup = 2;
+    }
+    else if (wordsToCheck.sort().join(',') === fourthGroup.sort().join(',')){
+      correct = true;
+      whichGroup = 3;
+    }
+    else {
+      correct = false;
+    }
+
+    if (correct) {
+      alert("nice! the category you found was: " + justCategories[whichGroup]);
+      for (let ind in indexes) {
+        document.getElementById(Object.values(indexes[ind]).toString()).style.visibility="hidden";
+        setGridState({...gridState, selectedWords:[]});
+      }
+      return;
+    }
+    alert("sorry, those aren't a connected group!")
+    for (let ind in indexes) {
+      document.getElementById(Object.values(indexes[ind]).toString()).className=".wordBox-inactive";
+      setGridState({...gridState, selectedWords:[]});
     }
   }
-  const [gameInProgress, setGameInProgress] = useState(true);
 
   return (
     <>
@@ -175,13 +242,13 @@ export default function Grid({children}) {
       width={width / 2}
       maxRows={4}
       maxCols={4}>
-        { gridState.objects.map((elements, index) => (
-           <div onClick={() => toggleActiveWords(index)} className="react-grid-item" key={index}>
+        { gridState.objects.map((_, index) => (
+           <div onClick={() => toggleActiveWords(index)} className="react-grid-item-visible" key={index} id={index}>
             <Card classNameProp={toggleActiveWordsStyle(index)} text={words[index]} />
           </div>
         )) }
       </GridLayout>
-      <button onClick={checkWork} className="checkButton">
+      <button onClick={() => checkWork(gridState.selectedWords)} className="checkButton">
         <p><b>check!</b></p> 
       </button>
     </>
